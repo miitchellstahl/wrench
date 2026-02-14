@@ -51,6 +51,7 @@ coverage/
 
 # Modal
 .modal/
+.secrets.json
 
 # Cache
 .cache/
@@ -87,3 +88,4 @@ terraform.rc
 
 # Internal docs (kept locally)
 docs/internal/
+.env*.local

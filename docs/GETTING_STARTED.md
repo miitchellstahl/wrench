@@ -47,12 +47,28 @@ brew install terraform
 # Node.js (22+)
 brew install node@22
 
-# Python 3.12+ and Modal CLI
-pip install modal
+# Python 3.12+ (required — StrEnum, used by modal-infra, needs 3.11+)
+brew install python@3.12
+
+# Modal CLI via pipx (avoids "externally-managed-environment" errors on modern Python)
+brew install pipx
+pipx install modal
+pipx ensurepath
+# restart your shell or run: source ~/.zshrc
+
+# inject modal-infra's python dependencies into the modal pipx environment
+# (modal deploy imports the source locally, so these must be available)
+pipx inject modal pydantic httpx websockets fastapi PyJWT
 
 # Wrangler CLI (for initial R2 bucket setup)
 npm install -g wrangler
 ```
+
+> **Note**: Do **not** use `pip install modal` directly — macOS and Homebrew Python 3.12+ block
+> system-wide pip installs ([PEP 668](https://peps.python.org/pep-0668/)). Use `pipx` as shown
+> above. The `pipx inject` step is required because Terraform's Modal deploy script imports the
+> `packages/modal-infra` source code locally to discover Modal endpoints, and those imports pull in
+> `pydantic`, `fastapi`, `httpx`, `websockets`, and `PyJWT`.
 
 ---
 
@@ -89,11 +105,15 @@ npm run build -w @open-inspect/shared
 
 Terraform needs a place to store its state. We use Cloudflare R2.
 
+> **Important**: You must **enable R2** on your Cloudflare account before creating buckets. Go to
+> the Cloudflare Dashboard → **R2 Object Storage** in the left sidebar → activate R2. This requires
+> a payment method on file (free tier covers up to 10 GB).
+
 ```bash
 # Login to Cloudflare
 wrangler login
 
-# Create the state bucket
+# Create the state bucket (requires R2 to be enabled — see note above)
 wrangler r2 bucket create open-inspect-terraform-state
 ```
 
@@ -264,9 +284,15 @@ Fill in your R2 credentials:
 ```hcl
 access_key = "your-r2-access-key-id"
 secret_key = "your-r2-secret-access-key"
-endpoints = {
-  s3 = "https://YOUR_CLOUDFLARE_ACCOUNT_ID.r2.cloudflarestorage.com"
-}
+
+# terraform < 1.6 uses "endpoint" (string), terraform >= 1.6 uses "endpoints" (object)
+# check your version with: terraform version
+# for terraform < 1.6:
+endpoint = "https://YOUR_CLOUDFLARE_ACCOUNT_ID.r2.cloudflarestorage.com"
+# for terraform >= 1.6:
+# endpoints = {
+#   s3 = "https://YOUR_CLOUDFLARE_ACCOUNT_ID.r2.cloudflarestorage.com"
+# }
 ```
 
 ### Configure `terraform.tfvars`

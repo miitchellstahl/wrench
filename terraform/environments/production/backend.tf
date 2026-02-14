@@ -24,7 +24,7 @@ terraform {
     region = "auto"
 
     # All sensitive/account-specific values passed via -backend-config
-    # endpoints = { s3 = "https://<ACCOUNT_ID>.r2.cloudflarestorage.com" }
+    # endpoint   = "https://<ACCOUNT_ID>.r2.cloudflarestorage.com"
     # access_key = "..."
     # secret_key = "..."
 
