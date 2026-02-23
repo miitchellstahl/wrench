@@ -9,7 +9,7 @@
  * 3. Token valid for 1 hour
  */
 
-import type { InstallationRepository } from "@open-inspect/shared";
+import type { InstallationRepository } from "@wrench/shared";
 
 /** Timeout for individual GitHub API requests (ms). */
 export const GITHUB_FETCH_TIMEOUT_MS = 60_000;
@@ -176,7 +176,7 @@ export async function getInstallationToken(jwt: string, installationId: string):
       Authorization: `Bearer ${jwt}`,
       Accept: "application/vnd.github+json",
       "X-GitHub-Api-Version": "2022-11-28",
-      "User-Agent": "Open-Inspect",
+      "User-Agent": "Wrench",
     },
   });
 
@@ -203,7 +203,7 @@ export async function generateInstallationToken(config: GitHubAppConfig): Promis
 }
 
 // Re-export from shared for backward compatibility
-export type { InstallationRepository } from "@open-inspect/shared";
+export type { InstallationRepository } from "@wrench/shared";
 
 /**
  * GitHub API response for installation repositories.
@@ -245,7 +245,7 @@ export async function listInstallationRepositories(
     Authorization: `Bearer ${token}`,
     Accept: "application/vnd.github+json",
     "X-GitHub-Api-Version": "2022-11-28",
-    "User-Agent": "Open-Inspect",
+    "User-Agent": "Wrench",
   };
 
   const fetchPage = async (
@@ -326,7 +326,7 @@ export async function getInstallationRepository(
       Authorization: `Bearer ${token}`,
       Accept: "application/vnd.github+json",
       "X-GitHub-Api-Version": "2022-11-28",
-      "User-Agent": "Open-Inspect",
+      "User-Agent": "Wrench",
     },
   });
 

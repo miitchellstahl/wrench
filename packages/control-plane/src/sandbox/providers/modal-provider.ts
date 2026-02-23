@@ -5,7 +5,7 @@
  * enabling unit testing and future provider abstraction.
  */
 
-import { generateInternalToken } from "@open-inspect/shared";
+import { generateInternalToken } from "@wrench/shared";
 import type { ModalClient } from "../client";
 import {
   DEFAULT_SANDBOX_TIMEOUT_SECONDS,

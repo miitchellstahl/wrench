@@ -1,4 +1,4 @@
-"""Authentication utilities for Open-Inspect."""
+"""Authentication utilities for Wrench."""
 
 from .github_app import generate_installation_token
 from .internal import AuthConfigurationError, require_secret, verify_internal_token

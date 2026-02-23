@@ -5,7 +5,7 @@ REPO_ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 cd "$REPO_ROOT"
 
 # ---------------------------------------------------------------------------
-# Helpers
+# helpers
 # ---------------------------------------------------------------------------
 info()  { printf '\033[1;34m==>\033[0m %s\n' "$*"; }
 warn()  { printf '\033[1;33mWARN:\033[0m %s\n' "$*"; }
@@ -19,12 +19,12 @@ check_cmd() {
 }
 
 # ---------------------------------------------------------------------------
-# 1. Check prerequisites
+# 1. check prerequisites
 # ---------------------------------------------------------------------------
 info "Checking prerequisites…"
 
 check_cmd node
-check_cmd npm
+check_cmd pnpm
 
 NODE_MAJOR=$(node -p 'process.versions.node.split(".")[0]')
 if (( NODE_MAJOR < 20 )); then
@@ -34,29 +34,19 @@ fi
 info "Node $(node -v) ✓"
 
 # ---------------------------------------------------------------------------
-# 2. Install npm dependencies (also triggers husky via prepare script)
+# 2. install pnpm dependencies
 # ---------------------------------------------------------------------------
-info "Installing npm dependencies…"
-npm install
+info "Installing pnpm dependencies…"
+pnpm install
 
 # ---------------------------------------------------------------------------
-# 3. Build shared package (other packages depend on it)
+# 3. build shared package (other packages depend on it)
 # ---------------------------------------------------------------------------
-info "Building @open-inspect/shared…"
-npm run build -w @open-inspect/shared
+info "Building @wrench/shared…"
+pnpm run build -w @wrench/shared
 
 # ---------------------------------------------------------------------------
-# 4. Verify git hooks
-# ---------------------------------------------------------------------------
-if [ -f .git/hooks/pre-commit ]; then
-  info "Git hooks (husky) installed ✓"
-else
-  warn "Git hooks not installed. Running husky…"
-  npx husky
-fi
-
-# ---------------------------------------------------------------------------
-# 5. Python environment (optional — for modal-infra development)
+# 4. python environment (optional — for modal-infra development)
 # ---------------------------------------------------------------------------
 MODAL_DIR="$REPO_ROOT/packages/modal-infra"
 
@@ -103,7 +93,6 @@ setup_python() {
 }
 
 if [ -d "$MODAL_DIR" ]; then
-  # Auto-setup if python3 is available; skip silently otherwise
   if command -v python3 &>/dev/null; then
     setup_python
   else
@@ -112,21 +101,21 @@ if [ -d "$MODAL_DIR" ]; then
 fi
 
 # ---------------------------------------------------------------------------
-# 6. Verify the setup
+# 5. verify the setup
 # ---------------------------------------------------------------------------
 info "Running type check…"
-if npm run typecheck; then
+if pnpm run typecheck; then
   info "Type check passed ✓"
 else
   warn "Type check had issues — you may need to build additional packages."
 fi
 
 # ---------------------------------------------------------------------------
-# Done
+# done
 # ---------------------------------------------------------------------------
 printf '\n'
 info "Setup complete! You can now:"
-info "  npm run dev -w @open-inspect/web        # Start web dev server"
-info "  npm run test -w @open-inspect/control-plane  # Run control-plane tests"
-info "  npm run lint                             # Lint all packages"
-info "  npm run typecheck                        # Type-check all packages"
+info "  pnpm run dev -w @wrench/web             # start web dev server"
+info "  pnpm run test -w @wrench/control-plane   # run control-plane tests"
+info "  pnpm run lint                             # lint all packages"
+info "  pnpm run typecheck                        # type-check all packages"

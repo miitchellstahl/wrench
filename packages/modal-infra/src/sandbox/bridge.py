@@ -618,7 +618,7 @@ class AgentBridge:
 
         Args:
             content: The prompt text content
-            model: Optional model override (e.g., "claude-haiku-4-5" or "anthropic/claude-haiku-4-5")
+            model: Optional model override (e.g., "claude-sonnet-4-5" or "anthropic/claude-opus-4-6")
             opencode_message_id: OpenCode-compatible ascending message ID (e.g., "msg_...").
                                  When provided, OpenCode uses this as the user message ID,
                                  and assistant responses will have parentID pointing to it.
@@ -1436,7 +1436,7 @@ class AgentBridge:
 
 async def main():
     """Entry point for bridge process."""
-    parser = argparse.ArgumentParser(description="Open-Inspect Agent Bridge")
+    parser = argparse.ArgumentParser(description="Wrench Agent Bridge")
     parser.add_argument("--sandbox-id", required=True, help="Sandbox ID")
     parser.add_argument("--session-id", required=True, help="Session ID for WebSocket connection")
     parser.add_argument("--control-plane", required=True, help="Control plane URL")

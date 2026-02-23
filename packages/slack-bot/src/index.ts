@@ -1,5 +1,5 @@
 /**
- * Open-Inspect Slack Bot Worker
+ * Wrench Slack Bot Worker
  *
  * Cloudflare Worker that handles Slack events and provides
  * a natural language interface to the coding agent.
@@ -29,7 +29,7 @@ import {
   getReasoningConfig,
   getDefaultReasoningEffort,
   isValidReasoningEffort,
-} from "@open-inspect/shared";
+} from "@wrench/shared";
 
 const log = createLogger("handler");
 
@@ -369,7 +369,7 @@ async function publishAppHome(env: Env, userId: string): Promise<void> {
       type: "section",
       text: {
         type: "mrkdwn",
-        text: "Configure your Open-Inspect preferences below.",
+        text: "Configure your Wrench preferences below.",
       },
     },
     { type: "divider" },
@@ -619,7 +619,7 @@ app.get("/health", async (c) => {
 
   return c.json({
     status: "healthy",
-    service: "open-inspect-slack-bot",
+    service: "wrench-slack-bot",
     repoCount,
   });
 });

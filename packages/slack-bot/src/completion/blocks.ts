@@ -3,7 +3,7 @@
  */
 
 import type { AgentResponse, CallbackContext } from "../types";
-import type { ManualPullRequestArtifactMetadata } from "@open-inspect/shared";
+import type { ManualPullRequestArtifactMetadata } from "@wrench/shared";
 
 /**
  * Slack Block Kit block type (subset).

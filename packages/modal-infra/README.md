@@ -1,10 +1,10 @@
-# Open-Inspect Modal Infrastructure
+# Wrench Modal Infrastructure
 
-Modal-based sandbox infrastructure for the Open-Inspect coding agent system.
+Modal-based sandbox infrastructure for the Wrench coding agent system.
 
 ## Overview
 
-This package provides the data plane for Open-Inspect:
+This package provides the data plane for Wrench:
 
 - **Sandboxes**: Isolated development environments running OpenCode
 - **Images**: Pre-built container images with all development tools
@@ -115,7 +115,7 @@ modal run src/
 The control plane communicates with Modal via HTTP endpoints. All endpoints (except health)
 require HMAC authentication via the `Authorization` header.
 
-Endpoint URLs follow the pattern: `https://{workspace}--open-inspect-{endpoint}.modal.run`
+Endpoint URLs follow the pattern: `https://{workspace}--wrench-{endpoint}.modal.run`
 
 ### Endpoints
 
@@ -131,7 +131,7 @@ Endpoint URLs follow the pattern: `https://{workspace}--open-inspect-{endpoint}.
 ### Example: Create Sandbox
 
 ```bash
-curl -X POST "https://${WORKSPACE}--open-inspect-api-create-sandbox.modal.run" \
+curl -X POST "https://${WORKSPACE}--wrench-api-create-sandbox.modal.run" \
   -H "Authorization: Bearer ${TOKEN}" \
   -H "Content-Type: application/json" \
   -d '{
@@ -146,8 +146,8 @@ curl -X POST "https://${WORKSPACE}--open-inspect-api-create-sandbox.modal.run" \
 ### Example: Health Check
 
 ```bash
-curl "https://${WORKSPACE}--open-inspect-api-health.modal.run"
-# {"success": true, "data": {"status": "healthy", "service": "open-inspect-modal"}}
+curl "https://${WORKSPACE}--wrench-api-health.modal.run"
+# {"success": true, "data": {"status": "healthy", "service": "wrench-modal"}}
 ```
 
 ## Environment Variables
@@ -168,7 +168,7 @@ Set via Modal secrets:
 | Criterion | Test Method |
 |-----------|-------------|
 | App deploys successfully | `modal deploy deploy.py` completes without errors |
-| Health endpoint responds | `curl https://{workspace}--open-inspect-api-health.modal.run` |
+| Health endpoint responds | `curl https://{workspace}--wrench-api-health.modal.run` |
 | Sandbox creation works | POST to `api-create-sandbox` returns success |
 | Git sync completes | Verify HEAD matches origin after sandbox start |
 | Snapshot/restore works | Take snapshot, restore, verify workspace state |

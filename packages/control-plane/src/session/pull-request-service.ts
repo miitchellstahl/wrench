@@ -1,4 +1,4 @@
-import { generateBranchName, type ManualPullRequestArtifactMetadata } from "@open-inspect/shared";
+import { generateBranchName, type ManualPullRequestArtifactMetadata } from "@wrench/shared";
 import type { Logger } from "../logger";
 import { resolveHeadBranchForPr } from "../source-control/branch-resolution";
 import {
@@ -174,7 +174,7 @@ export class SessionPullRequestService {
         return this.buildManualPrFallbackResult(session, headBranch, baseBranch, latestArtifacts);
       }
 
-      const fullBody = input.body + `\n\n---\n*Created with [Open-Inspect](${input.sessionUrl})*`;
+      const fullBody = input.body + `\n\n---\n*Created with [Wrench](${input.sessionUrl})*`;
 
       const prResult = await this.deps.sourceControlProvider.createPullRequest(
         input.promptingAuth,

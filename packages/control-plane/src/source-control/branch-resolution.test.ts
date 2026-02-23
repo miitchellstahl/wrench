@@ -19,7 +19,7 @@ describe("resolveHeadBranchForPr", () => {
     const result = resolveHeadBranchForPr({
       requestedHeadBranch: "feature/requested",
       sessionBranchName: "feature/session",
-      generatedBranchName: "open-inspect/session-1",
+      generatedBranchName: "wrench/session-1",
       baseBranch: "main",
     });
 
@@ -31,7 +31,7 @@ describe("resolveHeadBranchForPr", () => {
     const result = resolveHeadBranchForPr({
       requestedHeadBranch: "feature invalid",
       sessionBranchName: "feature/session",
-      generatedBranchName: "open-inspect/session-1",
+      generatedBranchName: "wrench/session-1",
       baseBranch: "main",
     });
 
@@ -43,11 +43,11 @@ describe("resolveHeadBranchForPr", () => {
     const result = resolveHeadBranchForPr({
       requestedHeadBranch: "main",
       sessionBranchName: " main ",
-      generatedBranchName: "open-inspect/session-1",
+      generatedBranchName: "wrench/session-1",
       baseBranch: "main",
     });
 
-    expect(result.headBranch).toBe("open-inspect/session-1");
+    expect(result.headBranch).toBe("wrench/session-1");
     expect(result.source).toBe("generated");
   });
 });

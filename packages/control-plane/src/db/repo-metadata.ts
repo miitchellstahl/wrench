@@ -1,4 +1,4 @@
-import type { RepoMetadata } from "@open-inspect/shared";
+import type { RepoMetadata } from "@wrench/shared";
 
 /** D1 batch() supports at most 100 statements per call. */
 const D1_BATCH_LIMIT = 100;

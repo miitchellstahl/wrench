@@ -1,5 +1,5 @@
 """
-Main Modal application definition for Open-Inspect.
+Main Modal application definition for Wrench.
 
 This module defines the Modal app and shared resources used across
 all sandbox operations.
@@ -15,7 +15,7 @@ from .log_config import get_logger
 log = get_logger("app")
 
 # Main Modal application
-app = modal.App("open-inspect")
+app = modal.App("wrench")
 
 # Image for Modal functions (not sandbox)
 # Includes all dependencies needed by the function modules at import time
@@ -57,7 +57,7 @@ def _get_allowed_hosts() -> set[str]:
     The ALLOWED_CONTROL_PLANE_HOSTS environment variable should contain
     a comma-separated list of allowed hostnames (with optional ports).
 
-    Example: "open-inspect-control-plane-prod.myaccount.workers.dev,localhost:8787"
+    Example: "wrench-control-plane-prod.myaccount.workers.dev,localhost:8787"
 
     Returns:
         Set of allowed host strings (lowercase)
@@ -81,7 +81,7 @@ def validate_control_plane_url(url: str | None) -> bool:
     during deployment.
 
     Example ALLOWED_CONTROL_PLANE_HOSTS:
-        "open-inspect-control-plane-prod.myaccount.workers.dev,localhost:8787"
+        "wrench-control-plane-prod.myaccount.workers.dev,localhost:8787"
 
     Args:
         url: The control plane URL to validate
@@ -111,4 +111,4 @@ def validate_control_plane_url(url: str | None) -> bool:
 
 
 # Volume for persistent storage (snapshot metadata, logs)
-inspect_volume = modal.Volume.from_name("open-inspect-data", create_if_missing=True)
+inspect_volume = modal.Volume.from_name("wrench-data", create_if_missing=True)

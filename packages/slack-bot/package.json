@@ -1,5 +1,5 @@
 {
-  "name": "@open-inspect/slack-bot",
+  "name": "@wrench/slack-bot",
   "version": "0.1.0",
   "private": true,
   "type": "module",
@@ -13,7 +13,7 @@
   "dependencies": {
     "@anthropic-ai/sdk": "^0.39.0",
     "@cloudflare/workers-types": "^4.20241230.0",
-    "@open-inspect/shared": "file:../shared",
+    "@wrench/shared": "file:../shared",
     "hono": "^4.11.7"
   },
   "devDependencies": {

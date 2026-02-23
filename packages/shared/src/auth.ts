@@ -2,7 +2,7 @@
  * Internal API authentication utilities.
  *
  * Provides HMAC-SHA256 time-based token generation and verification
- * for service-to-service authentication between Open-Inspect components.
+ * for service-to-service authentication between Wrench components.
  */
 
 /**

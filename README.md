@@ -1,11 +1,11 @@
-# Background Agents: Open-Inspect
+# Background Agents: Wrench
 
 An open-source background agents coding system inspired by
 [Ramp's Inspect](https://builders.ramp.com/post/why-we-built-our-background-agent).
 
 ## Overview
 
-Open-Inspect provides a hosted background coding agent that can:
+Wrench provides a hosted background coding agent that can:
 
 - Work on tasks in the background while you focus on other things
 - Access full development environments with all tools engineers have
@@ -154,7 +154,7 @@ Choose the AI model that fits your task — Anthropic Claude or OpenAI Codex:
 
 | Provider  | Models                                |
 | --------- | ------------------------------------- |
-| Anthropic | Claude Haiku, Sonnet, Opus            |
+| Anthropic | Sonnet, Opus                          |
 | OpenAI    | GPT 5.2, GPT 5.2 Codex, GPT 5.3 Codex |
 
 OpenAI models work with your existing ChatGPT subscription — no separate API key needed. See
@@ -162,10 +162,10 @@ OpenAI models work with your existing ChatGPT subscription — no separate API k
 
 ### Repository Setup Scripts
 
-Repositories can include a `.openinspect/setup.sh` script for custom environment setup:
+Repositories can include a `.wrench/setup.sh` script for custom environment setup:
 
 ```bash
-# .openinspect/setup.sh
+# .wrench/setup.sh
 #!/bin/bash
 npm install
 pip install -r requirements.txt

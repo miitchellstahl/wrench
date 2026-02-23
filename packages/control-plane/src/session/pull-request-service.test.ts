@@ -58,7 +58,7 @@ function createMockProvider() {
       webUrl: "https://github.com/acme/web/pull/42",
       apiUrl: "https://api.github.com/repos/acme/web/pulls/42",
       state: "open" as const,
-      sourceBranch: "open-inspect/session-name-1",
+      sourceBranch: "wrench/session-name-1",
       targetBranch: "main",
     })),
     buildManualPullRequestUrl: vi.fn(
@@ -192,7 +192,7 @@ describe("SessionPullRequestService", () => {
     expect(result.kind).toBe("manual");
     if (result.kind === "manual") {
       expect(result.createPrUrl).toContain("/pull/new/");
-      expect(result.headBranch).toBe("open-inspect/session-name-1");
+      expect(result.headBranch).toBe("wrench/session-name-1");
       expect(result.baseBranch).toBe("main");
     }
     expect(harness.deps.broadcastArtifactCreated).toHaveBeenCalledTimes(1);
@@ -214,7 +214,7 @@ describe("SessionPullRequestService", () => {
       .calls[0];
     expect(createPrCall[0]).toEqual({ authType: "oauth", token: "user-token" });
     expect(createPrCall[1].body).toContain(
-      "*Created with [Open-Inspect](https://app.example.com/session/session-name-1)*"
+      "*Created with [Wrench](https://app.example.com/session/session-name-1)*"
     );
     expect(harness.deps.broadcastArtifactCreated).toHaveBeenCalledWith({
       id: "id-1",
@@ -228,10 +228,10 @@ describe("SessionPullRequestService", () => {
     harness.artifacts.push({
       id: "branch-artifact-1",
       type: "branch",
-      url: "https://github.com/acme/web/pull/new/main...open-inspect/session-name-1",
+      url: "https://github.com/acme/web/pull/new/main...wrench/session-name-1",
       metadata: JSON.stringify({
         mode: "manual_pr",
-        head: "open-inspect/session-name-1",
+        head: "wrench/session-name-1",
         createPrUrl: "https://existing.example.com/manual-pr",
       }),
       created_at: Date.now(),
@@ -242,7 +242,7 @@ describe("SessionPullRequestService", () => {
     expect(result).toEqual({
       kind: "manual",
       createPrUrl: "https://existing.example.com/manual-pr",
-      headBranch: "open-inspect/session-name-1",
+      headBranch: "wrench/session-name-1",
       baseBranch: "main",
     });
     expect(harness.deps.broadcastArtifactCreated).not.toHaveBeenCalled();

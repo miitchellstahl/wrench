@@ -50,7 +50,7 @@ jobs:
         run: npm ci
 
       - name: Build shared package
-        run: npm run build -w @open-inspect/shared
+        run: npm run build -w @wrench/shared
 
       - name: TypeCheck all packages
         run: npm run typecheck
@@ -125,19 +125,19 @@ jobs:
         run: npm ci
 
       - name: Build shared package
-        run: npm run build -w @open-inspect/shared
+        run: npm run build -w @wrench/shared
 
       - name: Run control-plane tests
-        run: npm test -w @open-inspect/control-plane
+        run: npm test -w @wrench/control-plane
 
       - name: Install workerd runtime dependency
         run: sudo apt-get update && sudo apt-get install -y libc++1
 
       - name: Run control-plane integration tests
-        run: npm run test:integration -w @open-inspect/control-plane
+        run: npm run test:integration -w @wrench/control-plane
 
       - name: Run web tests
-        run: npm test -w @open-inspect/web
+        run: npm test -w @wrench/web
 
   test-python:
     name: Test (Python)

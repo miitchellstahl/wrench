@@ -1,6 +1,6 @@
 # Using OpenAI Models
 
-Open-Inspect supports OpenAI Codex models in addition to Anthropic Claude models. This guide covers
+Wrench supports OpenAI Codex models in addition to Anthropic Claude models. This guide covers
 how to configure your deployment to use them.
 
 > **Note**: This setup process is temporary and will be streamlined in a future release.
@@ -44,7 +44,7 @@ required tokens.
 
 ### Step 2: Add Secrets to Your Deployment
 
-1. Go to your Open-Inspect web app's **Settings** page
+1. Go to your Wrench web app's **Settings** page
 2. Add the following repository secrets:
 
    | Secret Name                  | Value                           |
@@ -75,7 +75,7 @@ Credentials are scoped per repository, so different repos can use different Open
 ### Model doesn't appear in the dropdown
 
 Ensure your deployment is up to date. OpenAI model support requires the latest version of
-Open-Inspect.
+Wrench.
 
 ### Session fails to start with an OpenAI model
 

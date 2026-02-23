@@ -5,7 +5,7 @@
  * All requests are authenticated using HMAC-signed tokens.
  */
 
-import { generateInternalToken } from "@open-inspect/shared";
+import { generateInternalToken } from "@wrench/shared";
 import { createLogger } from "../logger";
 
 const log = createLogger("modal-client");
@@ -21,7 +21,7 @@ export interface CorrelationHeaders {
 }
 
 // Modal app name
-const MODAL_APP_NAME = "open-inspect";
+const MODAL_APP_NAME = "wrench";
 
 /**
  * Construct the Modal base URL from workspace name.

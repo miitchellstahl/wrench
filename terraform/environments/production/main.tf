@@ -1,7 +1,7 @@
 # =============================================================================
-# Open-Inspect - Production Environment
+# Wrench - Production Environment
 # =============================================================================
-# This configuration deploys the complete Open-Inspect infrastructure:
+# This configuration deploys the complete Wrench infrastructure:
 # - Cloudflare Workers (control-plane, slack-bot)
 # - Cloudflare KV Namespaces
 # - Vercel Web App
@@ -12,10 +12,15 @@ locals {
   name_suffix = var.deployment_name
 
   # URLs for cross-service configuration
-  control_plane_host = "open-inspect-control-plane-${local.name_suffix}.${var.cloudflare_worker_subdomain}.workers.dev"
+  control_plane_host = "wrench-control-plane-${local.name_suffix}.${var.cloudflare_worker_subdomain}.workers.dev"
   control_plane_url  = "https://${local.control_plane_host}"
-  web_app_url        = "https://open-inspect-${local.name_suffix}.vercel.app"
+  web_app_url        = "https://wrench-${local.name_suffix}.vercel.app"
   ws_url             = "wss://${local.control_plane_host}"
+
+  # dev backend URLs (for vercel "development" env target so `vercel env pull` gets dev URLs)
+  dev_control_plane_host = "wrench-control-plane-${var.dev_deployment_name}.${var.cloudflare_worker_subdomain}.workers.dev"
+  dev_control_plane_url  = "https://${local.dev_control_plane_host}"
+  dev_ws_url             = "wss://${local.dev_control_plane_host}"
 
   # Worker script paths (deterministic output locations)
   control_plane_script_path = "${var.project_root}/packages/control-plane/dist/index.js"
@@ -30,14 +35,14 @@ module "session_index_kv" {
   source = "../../modules/cloudflare-kv"
 
   account_id     = var.cloudflare_account_id
-  namespace_name = "open-inspect-session-index-${local.name_suffix}"
+  namespace_name = "wrench-session-index-${local.name_suffix}"
 }
 
 module "slack_kv" {
   source = "../../modules/cloudflare-kv"
 
   account_id     = var.cloudflare_account_id
-  namespace_name = "open-inspect-slack-kv-${local.name_suffix}"
+  namespace_name = "wrench-slack-kv-${local.name_suffix}"
 }
 
 # =============================================================================
@@ -46,7 +51,7 @@ module "slack_kv" {
 
 resource "cloudflare_d1_database" "main" {
   account_id = var.cloudflare_account_id
-  name       = "open-inspect-${local.name_suffix}"
+  name       = "wrench-${local.name_suffix}"
 
   read_replication = {
     mode = "disabled"
@@ -75,6 +80,16 @@ resource "null_resource" "d1_migrations" {
 }
 
 # =============================================================================
+# Cloudflare R2 Buckets
+# =============================================================================
+
+resource "cloudflare_r2_bucket" "screenshots" {
+  account_id = var.cloudflare_account_id
+  name       = "wrench-screenshots-${local.name_suffix}"
+  location   = "ENAM"
+}
+
+# =============================================================================
 # Cloudflare Workers
 # =============================================================================
 
@@ -96,7 +111,7 @@ module "control_plane_worker" {
   source = "../../modules/cloudflare-worker"
 
   account_id  = var.cloudflare_account_id
-  worker_name = "open-inspect-control-plane-${local.name_suffix}"
+  worker_name = "wrench-control-plane-${local.name_suffix}"
   script_path = local.control_plane_script_path
 
   kv_namespaces = [
@@ -113,10 +128,17 @@ module "control_plane_worker" {
     }
   ]
 
+  r2_buckets = [
+    {
+      binding_name = "SCREENSHOTS_BUCKET"
+      bucket_name  = cloudflare_r2_bucket.screenshots.name
+    }
+  ]
+
   service_bindings = [
     {
       binding_name = "SLACK_BOT"
-      service_name = "open-inspect-slack-bot-${local.name_suffix}"
+      service_name = "wrench-slack-bot-${local.name_suffix}"
     }
   ]
 
@@ -128,6 +150,7 @@ module "control_plane_worker" {
     { name = "WORKER_URL", value = local.control_plane_url },
     { name = "MODAL_WORKSPACE", value = var.modal_workspace },
     { name = "DEPLOYMENT_NAME", value = var.deployment_name },
+    { name = "SCREENSHOTS_PUBLIC_URL", value = "${local.control_plane_url}/screenshots" },
   ]
 
   secrets = [
@@ -149,12 +172,13 @@ module "control_plane_worker" {
   ]
 
   enable_durable_object_bindings = var.enable_durable_object_bindings
+  enable_ai = true
 
   compatibility_date  = "2024-09-23"
   compatibility_flags = ["nodejs_compat"]
   migration_tag       = "v1"
 
-  depends_on = [null_resource.control_plane_build, module.session_index_kv, null_resource.d1_migrations]
+  depends_on = [null_resource.control_plane_build, module.session_index_kv, null_resource.d1_migrations, cloudflare_r2_bucket.screenshots]
 }
 
 # Build slack-bot worker bundle (only runs during apply, not plan)
@@ -175,7 +199,7 @@ module "slack_bot_worker" {
   source = "../../modules/cloudflare-worker"
 
   account_id  = var.cloudflare_account_id
-  worker_name = "open-inspect-slack-bot-${local.name_suffix}"
+  worker_name = "wrench-slack-bot-${local.name_suffix}"
   script_path = local.slack_bot_script_path
 
   kv_namespaces = [
@@ -188,7 +212,7 @@ module "slack_bot_worker" {
   service_bindings = [
     {
       binding_name = "CONTROL_PLANE"
-      service_name = "open-inspect-control-plane-${local.name_suffix}"
+      service_name = "wrench-control-plane-${local.name_suffix}"
     }
   ]
 
@@ -198,8 +222,8 @@ module "slack_bot_worker" {
     { name = "CONTROL_PLANE_URL", value = local.control_plane_url },
     { name = "WEB_APP_URL", value = local.web_app_url },
     { name = "DEPLOYMENT_NAME", value = var.deployment_name },
-    { name = "DEFAULT_MODEL", value = "claude-haiku-4-5" },
-    { name = "CLASSIFICATION_MODEL", value = "claude-haiku-4-5" },
+    { name = "DEFAULT_MODEL", value = "claude-sonnet-4-5" },
+    { name = "CLASSIFICATION_MODEL", value = "claude-sonnet-4-5" },
   ]
 
   secrets = [
@@ -222,13 +246,13 @@ module "slack_bot_worker" {
 module "web_app" {
   source = "../../modules/vercel-project"
 
-  project_name = "open-inspect-${local.name_suffix}"
+  project_name = "wrench-${local.name_suffix}"
   team_id      = var.vercel_team_id
   framework    = "nextjs"
 
   # No git_repository - deploy via CLI/CI instead of auto-deploy on push
   root_directory  = "packages/web"
-  install_command = "cd ../.. && npm install && npm run build -w @open-inspect/shared"
+  install_command = "cd ../.. && npm install && npm run build -w @wrench/shared"
   build_command   = "next build"
 
   environment_variables = [
@@ -236,29 +260,42 @@ module "web_app" {
     {
       key       = "GITHUB_CLIENT_ID"
       value     = var.github_client_id
-      targets   = ["production", "preview"]
+      targets   = ["production", "preview", "development"]
       sensitive = false
     },
     {
       key       = "GITHUB_CLIENT_SECRET"
       value     = var.github_client_secret
-      targets   = ["production", "preview"]
-      sensitive = true
+      targets   = ["production", "preview", "development"]
+      sensitive = false
     },
-    # NextAuth
+    # NextAuth - production url
     {
       key       = "NEXTAUTH_URL"
       value     = local.web_app_url
       targets   = ["production"]
       sensitive = false
     },
+    # NextAuth - dev url (so vercel env pull works for local dev)
+    {
+      key       = "NEXTAUTH_URL"
+      value     = "http://localhost:3000"
+      targets   = ["development"]
+      sensitive = false
+    },
     {
       key       = "NEXTAUTH_SECRET"
       value     = var.nextauth_secret
       targets   = ["production", "preview"]
-      sensitive = true
+      sensitive = false
     },
-    # Control Plane
+    {
+      key       = "NEXTAUTH_SECRET"
+      value     = var.dev_nextauth_secret != "" ? var.dev_nextauth_secret : var.nextauth_secret
+      targets   = ["development"]
+      sensitive = false
+    },
+    # Control Plane - prod/preview targets use prod backend
     {
       key       = "CONTROL_PLANE_URL"
       value     = local.control_plane_url
@@ -271,24 +308,43 @@ module "web_app" {
       targets   = ["production", "preview"]
       sensitive = false
     },
+    # Control Plane - development target uses dev backend (so `vercel env pull` gets dev URLs)
+    {
+      key       = "CONTROL_PLANE_URL"
+      value     = local.dev_control_plane_url
+      targets   = ["development"]
+      sensitive = false
+    },
+    {
+      key       = "NEXT_PUBLIC_WS_URL"
+      value     = local.dev_ws_url
+      targets   = ["development"]
+      sensitive = false
+    },
     # Internal
     {
       key       = "INTERNAL_CALLBACK_SECRET"
       value     = var.internal_callback_secret
       targets   = ["production", "preview"]
-      sensitive = true
+      sensitive = false
+    },
+    {
+      key       = "INTERNAL_CALLBACK_SECRET"
+      value     = var.dev_internal_callback_secret != "" ? var.dev_internal_callback_secret : var.internal_callback_secret
+      targets   = ["development"]
+      sensitive = false
     },
     # Access Control
     {
       key       = "ALLOWED_USERS"
       value     = var.allowed_users
-      targets   = ["production", "preview"]
+      targets   = ["production", "preview", "development"]
       sensitive = false
     },
     {
       key       = "ALLOWED_EMAIL_DOMAINS"
       value     = var.allowed_email_domains
-      targets   = ["production", "preview"]
+      targets   = ["production", "preview", "development"]
       sensitive = false
     },
   ]
@@ -320,13 +376,13 @@ module "modal_app" {
   modal_token_id     = var.modal_token_id
   modal_token_secret = var.modal_token_secret
 
-  app_name      = "open-inspect"
+  app_name      = var.modal_app_name
   workspace     = var.modal_workspace
   deploy_path   = "${var.project_root}/packages/modal-infra"
   deploy_module = "deploy"
   source_hash   = data.external.modal_source_hash.result.hash
 
-  volume_name = "open-inspect-data"
+  volume_name = "wrench-data"
 
   secrets = [
     {

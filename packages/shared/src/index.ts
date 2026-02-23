@@ -1,5 +1,5 @@
 /**
- * Shared types and utilities for Open-Inspect.
+ * Shared types and utilities for Wrench.
  */
 
 export * from "./types";

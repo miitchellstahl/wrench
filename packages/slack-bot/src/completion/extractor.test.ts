@@ -48,8 +48,8 @@ describe("extractAgentResponse", () => {
             {
               id: "a2",
               type: "branch",
-              url: "https://github.com/octocat/repo/pull/new/main...open-inspect%2Fsession-123",
-              metadata: { head: "open-inspect/session-123", mode: "manual_pr" },
+              url: "https://github.com/octocat/repo/pull/new/main...wrench%2Fsession-123",
+              metadata: { head: "wrench/session-123", mode: "manual_pr" },
               createdAt: 2,
             },
           ],
@@ -76,9 +76,9 @@ describe("extractAgentResponse", () => {
       },
       {
         type: "branch",
-        url: "https://github.com/octocat/repo/pull/new/main...open-inspect%2Fsession-123",
-        label: "Branch: open-inspect/session-123",
-        metadata: { head: "open-inspect/session-123", mode: "manual_pr" },
+        url: "https://github.com/octocat/repo/pull/new/main...wrench%2Fsession-123",
+        label: "Branch: wrench/session-123",
+        metadata: { head: "wrench/session-123", mode: "manual_pr" },
       },
     ]);
   });

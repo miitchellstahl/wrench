@@ -1,5 +1,5 @@
 """
-Modal function definitions for Open-Inspect API.
+Modal function definitions for Wrench API.
 
 These functions expose the sandbox management operations as
 Modal functions that can be called from the control plane.
@@ -282,5 +282,5 @@ def health_check() -> dict:
     """Health check endpoint."""
     return {
         "status": "healthy",
-        "service": "open-inspect-modal",
+        "service": "wrench-modal",
     }

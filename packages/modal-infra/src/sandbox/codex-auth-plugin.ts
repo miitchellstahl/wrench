@@ -1,5 +1,5 @@
 /**
- * Codex Auth Proxy Plugin for Open-Inspect.
+ * Codex Auth Proxy Plugin for Wrench.
  *
  * Overrides the built-in CodexAuthPlugin to delegate token refresh to the
  * control plane instead of calling OpenAI directly. This ensures rotating

@@ -48,7 +48,7 @@ jobs:
 
       - name: Build shared package
         if: steps.check-secrets.outputs.configured == 'true'
-        run: npm run build -w @open-inspect/shared
+        run: npm run build -w @wrench/shared
 
       - name: Install Vercel CLI
         if: steps.check-secrets.outputs.configured == 'true'

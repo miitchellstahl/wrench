@@ -2,7 +2,7 @@
 # Uses Cloudflare R2 (S3-compatible storage)
 #
 # Prerequisites:
-# 1. Create R2 bucket: wrangler r2 bucket create open-inspect-terraform-state
+# 1. Create R2 bucket: wrangler r2 bucket create wrench-terraform-state
 # 2. Generate R2 API token with read/write permissions
 # 3. Initialize with:
 #    terraform init \
@@ -19,7 +19,7 @@
 
 terraform {
   backend "s3" {
-    bucket = "open-inspect-terraform-state"
+    bucket = "wrench-terraform-state"
     key    = "production/terraform.tfstate"
     region = "auto"
 

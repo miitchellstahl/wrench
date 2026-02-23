@@ -1,4 +1,4 @@
-"""Open-Inspect Modal sandbox infrastructure."""
+"""Wrench Modal sandbox infrastructure."""
 
 # Import modules to register functions with the app
 # (all use lazy imports internally to avoid pydantic dependency at load time)

@@ -1,7 +1,7 @@
 [project]
-name = "open-inspect-modal"
+name = "wrench-modal"
 version = "0.1.0"
-description = "Modal sandbox infrastructure for Open-Inspect coding agent"
+description = "Modal sandbox infrastructure for Wrench coding agent"
 requires-python = ">=3.12"
 dependencies = [
     "modal>=0.73.0",

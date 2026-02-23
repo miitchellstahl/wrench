@@ -1,4 +1,4 @@
-# Open-Inspect Control Plane
+# Wrench Control Plane
 
 Cloudflare Workers + Durable Objects control plane for session management and real-time streaming.
 
@@ -80,7 +80,7 @@ The control plane provides:
 - `headBranch` (optional)
 
 When `headBranch` is omitted, control-plane resolves it from session state and finally falls back to
-the generated `open-inspect/<session>` branch.
+the generated `wrench/<session>` branch.
 
 ### Repositories
 

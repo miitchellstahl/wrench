@@ -1,4 +1,4 @@
-"""CLI utilities for Open-Inspect Modal functions."""
+"""CLI utilities for Wrench Modal functions."""
 
 from .app import app
 

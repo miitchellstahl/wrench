@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useCallback } from "react";
 
-const SIDEBAR_STORAGE_KEY = "open-inspect-sidebar-open";
+const SIDEBAR_STORAGE_KEY = "wrench-sidebar-open";
 
 export function useSidebar() {
   const [isOpen, setIsOpen] = useState(true);

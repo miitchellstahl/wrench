@@ -1,13 +1,13 @@
-# Contributing to Open-Inspect
+# Contributing to Wrench
 
-Thank you for your interest in contributing to Open-Inspect! This document provides guidelines for
+Thank you for your interest in contributing to Wrench! This document provides guidelines for
 contributing to the project.
 
 ## Getting Started
 
 1. Fork the repository
-2. Clone your fork: `git clone https://github.com/YOUR-USERNAME/open-inspect.git`
-3. Run the setup script: `bash .openinspect/setup.sh`
+2. Clone your fork: `git clone https://github.com/YOUR-USERNAME/wrench.git`
+3. Run the setup script: `bash .wrench/setup.sh`
 4. Create a branch for your changes: `git checkout -b feature/your-feature-name`
 
 ## Development Setup
@@ -15,7 +15,7 @@ contributing to the project.
 The quickest way to get a working environment:
 
 ```bash
-bash .openinspect/setup.sh
+bash .wrench/setup.sh
 ```
 
 This handles npm dependencies, builds the shared package, configures git hooks (husky +
@@ -30,7 +30,7 @@ For manual setup or individual steps:
 npm install
 
 # Build shared package
-npm run build -w @open-inspect/shared
+npm run build -w @wrench/shared
 
 # Run type checking
 npm run typecheck
