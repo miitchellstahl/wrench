@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { listRepos, createSession } from "@/lib/api";
 import { Button } from "@/components/ui/button";
 import { ModelSelector, useModelState } from "@/sidepanel/components/ModelSelector";
-import type { InstallationRepository } from "@open-inspect/shared";
+import type { InstallationRepository } from "@wrench/shared";
 
 interface NewSessionProps {
   onCreated: (sessionId: string) => void;

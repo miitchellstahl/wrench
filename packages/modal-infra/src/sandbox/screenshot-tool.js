@@ -1,5 +1,5 @@
 /**
- * Screenshot Tool for Open-Inspect.
+ * Screenshot Tool for Wrench.
  *
  * Takes screenshots of the running dev server using Playwright.
  * Uploads the screenshot to the control plane which stores it in R2.

@@ -32,7 +32,7 @@ describe("buildCompletionBlocks", () => {
       "session-123",
       BASE_RESPONSE,
       BASE_CONTEXT,
-      "https://app.openinspect.dev"
+      "https://app.wrench.dev"
     );
     const actionElements = getActionElements(blocks);
 
@@ -46,12 +46,12 @@ describe("buildCompletionBlocks", () => {
       artifacts: [
         {
           type: "branch",
-          url: "https://github.com/octocat/hello-world/pull/new/main...open-inspect%2Fsession-123",
-          label: "Branch: open-inspect/session-123",
+          url: "https://github.com/octocat/hello-world/pull/new/main...wrench%2Fsession-123",
+          label: "Branch: wrench/session-123",
           metadata: {
             mode: "manual_pr",
             createPrUrl:
-              "https://github.com/octocat/hello-world/pull/new/main...open-inspect%2Fsession-123",
+              "https://github.com/octocat/hello-world/pull/new/main...wrench%2Fsession-123",
           },
         },
       ],
@@ -61,14 +61,14 @@ describe("buildCompletionBlocks", () => {
       "session-123",
       response,
       BASE_CONTEXT,
-      "https://app.openinspect.dev"
+      "https://app.wrench.dev"
     );
     const actionElements = getActionElements(blocks);
     const createPrButton = actionElements.find((element) => element.action_id === "create_pr");
 
     expect(createPrButton).toBeDefined();
     expect(createPrButton?.url).toBe(
-      "https://github.com/octocat/hello-world/pull/new/main...open-inspect%2Fsession-123"
+      "https://github.com/octocat/hello-world/pull/new/main...wrench%2Fsession-123"
     );
   });
 
@@ -78,12 +78,12 @@ describe("buildCompletionBlocks", () => {
       artifacts: [
         {
           type: "branch",
-          url: "https://github.com/octocat/hello-world/pull/new/main...open-inspect%2Fsession-123",
-          label: "Branch: open-inspect/session-123",
+          url: "https://github.com/octocat/hello-world/pull/new/main...wrench%2Fsession-123",
+          label: "Branch: wrench/session-123",
           metadata: {
             mode: "manual_pr",
             createPrUrl:
-              "https://github.com/octocat/hello-world/pull/new/main...open-inspect%2Fsession-123",
+              "https://github.com/octocat/hello-world/pull/new/main...wrench%2Fsession-123",
           },
         },
         {
@@ -99,7 +99,7 @@ describe("buildCompletionBlocks", () => {
       "session-123",
       response,
       BASE_CONTEXT,
-      "https://app.openinspect.dev"
+      "https://app.wrench.dev"
     );
     const actionElements = getActionElements(blocks);
     const createPrButton = actionElements.find((element) => element.action_id === "create_pr");
@@ -127,7 +127,7 @@ describe("buildCompletionBlocks", () => {
       "session-123",
       response,
       BASE_CONTEXT,
-      "https://app.openinspect.dev"
+      "https://app.wrench.dev"
     );
     const actionElements = getActionElements(blocks);
     const createPrButton = actionElements.find((element) => element.action_id === "create_pr");
@@ -155,7 +155,7 @@ describe("buildCompletionBlocks", () => {
       "session-123",
       response,
       BASE_CONTEXT,
-      "https://app.openinspect.dev"
+      "https://app.wrench.dev"
     );
     const actionElements = getActionElements(blocks);
     const createPrButton = actionElements.find((element) => element.action_id === "create_pr");

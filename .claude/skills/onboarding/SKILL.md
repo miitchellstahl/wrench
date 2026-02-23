@@ -1,16 +1,16 @@
 ---
 name: onboarding
 description:
-  Deploy your own Open-Inspect instance. Use when the user wants to set up, deploy, or onboard to
-  Open-Inspect. Guides through repository setup, credential collection, Terraform deployment, and
+  Deploy your own Wrench instance. Use when the user wants to set up, deploy, or onboard to
+  Wrench. Guides through repository setup, credential collection, Terraform deployment, and
   verification with user handoffs.
 user-invocable: true
 allowed-tools: Bash, Read, Write, Edit, Glob, Grep, AskUserQuestion, TodoWrite
 ---
 
-# Open-Inspect Deployment Guide
+# Wrench Deployment Guide
 
-You are guiding the user through deploying their own instance of Open-Inspect. This is a multi-phase
+You are guiding the user through deploying their own instance of Wrench. This is a multi-phase
 process requiring user interaction for credential collection and external service configuration.
 
 ## Before Starting
@@ -41,11 +41,11 @@ echo "Suggested deployment name: $(openssl rand -hex 3)"
 Use AskUserQuestion to gather:
 
 1. **Directory location** - Where to create the project (default: current directory or
-   ~/workplace/open-inspect-{suffix})
+   ~/workplace/wrench-{suffix})
 2. **GitHub account** - Which account/org hosts the private repo
 3. **Deployment name** - A globally unique identifier for URLs (e.g., their GitHub username, company
    name, or the random suffix generated above). Explain this creates URLs like
-   `open-inspect-{deployment_name}.vercel.app` and must be unique across all Vercel users.
+   `wrench-{deployment_name}.vercel.app` and must be unique across all Vercel users.
 4. **Slack integration** - Yes or No
 5. **Prerequisites confirmation** - Confirm they have accounts on Cloudflare, Vercel, Modal,
    Anthropic
@@ -56,14 +56,14 @@ Execute these commands (substitute values from Phase 1):
 
 ```bash
 mkdir -p {directory_path}
-gh repo create {github_account}/open-inspect-{name} --private --description "Open-Inspect deployment"
+gh repo create {github_account}/wrench-{name} --private --description "Wrench deployment"
 cd {directory_path}
-git clone git@github.com:ColeMurray/open-inspect.git .
+git clone git@github.com:ColeMurray/wrench.git .
 git remote rename origin upstream
-git remote add origin git@github.com:{github_account}/open-inspect-{name}.git
+git remote add origin git@github.com:{github_account}/wrench-{name}.git
 git push -u origin main
 npm install
-npm run build -w @open-inspect/shared
+npm run build -w @wrench/shared
 ```
 
 ## Phase 3: Credential Collection
@@ -87,7 +87,7 @@ Check wrangler login status, then create bucket:
 
 ```bash
 wrangler whoami
-wrangler r2 bucket create open-inspect-{name}-tf-state
+wrangler r2 bucket create wrench-{name}-tf-state
 ```
 
 Tell user to create R2 API Token at R2 → Overview → Manage R2 API Tokens with "Object Read & Write"
@@ -120,11 +120,11 @@ modal profile current
 Guide user through creating a GitHub App (handles both OAuth and repo access):
 
 1. Go to https://github.com/settings/apps → "New GitHub App"
-2. **Name**: `Open-Inspect-{YourName}` (globally unique)
-3. **Homepage URL**: `https://open-inspect-{deployment_name}.vercel.app`
+2. **Name**: `Wrench-{YourName}` (globally unique)
+3. **Homepage URL**: `https://wrench-{deployment_name}.vercel.app`
 4. **Webhook**: Uncheck "Active"
 5. **Callback URL** (under "Identifying and authorizing users"):
-   `https://open-inspect-{deployment_name}.vercel.app/api/auth/callback/github`
+   `https://wrench-{deployment_name}.vercel.app/api/auth/callback/github`
    - **CRITICAL**: Must match deployed Vercel URL exactly!
 6. **Repository permissions**: Contents (Read & Write), Pull requests (Read & Write), Metadata
    (Read-only)
@@ -169,7 +169,7 @@ Create `terraform/environments/production/backend.tfvars`:
 ```hcl
 access_key = "{r2_access_key}"
 secret_key = "{r2_secret_key}"
-bucket     = "open-inspect-{name}-tf-state"
+bucket     = "wrench-{name}-tf-state"
 endpoints = {
   s3 = "https://{cloudflare_account_id}.r2.cloudflarestorage.com"
 }
@@ -187,7 +187,7 @@ enable_service_bindings        = false
 **Important**: Build the workers before running Terraform (Terraform references the built bundles):
 
 ```bash
-npm run build -w @open-inspect/control-plane -w @open-inspect/slack-bot
+npm run build -w @wrench/control-plane -w @wrench/slack-bot
 ```
 
 **Phase 1** (bindings disabled):
@@ -218,14 +218,14 @@ The App Home provides a settings interface where users can configure their prefe
 ### Configure Event Subscriptions
 
 1. Event Subscriptions → Enable → Request URL:
-   `https://open-inspect-slack-bot-{deployment_name}.{subdomain}.workers.dev/events`
+   `https://wrench-slack-bot-{deployment_name}.{subdomain}.workers.dev/events`
 2. Wait for "Verified" checkmark
 3. Subscribe to bot events: `app_home_opened`, `app_mention`
 
 ### Configure Interactivity
 
 4. Interactivity → Enable → Request URL:
-   `https://open-inspect-slack-bot-{deployment_name}.{subdomain}.workers.dev/interactions`
+   `https://wrench-slack-bot-{deployment_name}.{subdomain}.workers.dev/interactions`
 
 ### Invite Bot to Channels
 
@@ -234,16 +234,16 @@ The App Home provides a settings interface where users can configure their prefe
 ## Phase 10: Web App Deployment
 
 ```bash
-npx vercel link --project open-inspect-{deployment_name}
+npx vercel link --project wrench-{deployment_name}
 npx vercel --prod
 ```
 
 ## Phase 11: Verification
 
 ```bash
-curl https://open-inspect-control-plane-{deployment_name}.{subdomain}.workers.dev/health
-curl https://{workspace}--open-inspect-api-health.modal.run
-curl -I https://open-inspect-{deployment_name}.vercel.app
+curl https://wrench-control-plane-{deployment_name}.{subdomain}.workers.dev/health
+curl https://{workspace}--wrench-api-health.modal.run
+curl -I https://wrench-{deployment_name}.vercel.app
 ```
 
 Present deployment summary table. Instruct user to test: visit web app, sign in with GitHub, create
@@ -261,8 +261,8 @@ Ask if user wants GitHub Actions CI/CD. If yes, use `gh secret set` for all requ
   reinstall if scopes changed
 - **Vercel build fails**: Terraform configures the monorepo build commands automatically
 - **"no such file or directory" for dist/index.js**: Build workers before Terraform:
-  `npm run build -w @open-inspect/control-plane -w @open-inspect/slack-bot`
-- **Worker deployment fails**: Build shared package first: `npm run build -w @open-inspect/shared`
+  `npm run build -w @wrench/control-plane -w @wrench/slack-bot`
+- **Worker deployment fails**: Build shared package first: `npm run build -w @wrench/shared`
 
 ## Important Notes
 

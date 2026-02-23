@@ -43,7 +43,7 @@ class SandboxSupervisor:
     MAX_RESTARTS = 5
     BACKOFF_BASE = 2.0
     BACKOFF_MAX = 60.0
-    SETUP_SCRIPT_PATH = ".openinspect/setup.sh"
+    SETUP_SCRIPT_PATH = ".wrench/setup.sh"
     DEFAULT_SETUP_TIMEOUT_SECONDS = 300
 
     def __init__(self):
@@ -615,7 +615,7 @@ class SandboxSupervisor:
 
     async def run_setup_script(self) -> bool:
         """
-        Run .openinspect/setup.sh if it exists in the cloned repo.
+        Run .wrench/setup.sh if it exists in the cloned repo.
 
         Non-fatal: failures are logged but don't block startup.
 

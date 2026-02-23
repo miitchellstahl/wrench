@@ -1,6 +1,6 @@
 # Debugging Playbook
 
-Reference for querying structured logs across all Open-Inspect services.
+Reference for querying structured logs across all Wrench services.
 
 All services emit flat JSON lines with a common envelope. Use the `msg` field (stable event
 identifier) for filtering, and correlation fields (`trace_id`, `session_id`, `message_id`) for

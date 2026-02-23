@@ -1,4 +1,4 @@
-"""Sandbox management for Open-Inspect.
+"""Sandbox management for Wrench.
 
 Note: This module is imported both from the Modal function layer (which has modal installed)
 and from inside sandboxes (which don't have modal). We use lazy imports to avoid

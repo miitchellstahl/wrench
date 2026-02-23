@@ -1,5 +1,5 @@
 /**
- * API router for Open-Inspect Control Plane.
+ * API router for Wrench Control Plane.
  */
 
 import type { Env, CreateSessionRequest, CreateSessionResponse } from "./types";
@@ -21,14 +21,14 @@ import { SecretsValidationError, normalizeKey, validateKey } from "./db/secrets-
 import { SessionIndexStore } from "./db/session-index";
 
 import { RepoMetadataStore } from "./db/repo-metadata";
-import { getValidModelOrDefault, isValidReasoningEffort } from "@open-inspect/shared";
+import { getValidModelOrDefault, isValidReasoningEffort } from "@wrench/shared";
 import { createRequestMetrics, instrumentD1 } from "./db/instrumented-d1";
 import type { RequestMetrics } from "./db/instrumented-d1";
 import type {
   EnrichedRepository,
   InstallationRepository,
   RepoMetadata,
-} from "@open-inspect/shared";
+} from "@wrench/shared";
 import { createLogger } from "./logger";
 import type { CorrelationContext } from "./logger";
 
@@ -343,7 +343,7 @@ const routes: Route[] = [
   {
     method: "GET",
     pattern: parsePattern("/health"),
-    handler: async () => json({ status: "healthy", service: "open-inspect-control-plane" }),
+    handler: async () => json({ status: "healthy", service: "wrench-control-plane" }),
   },
 
   // Screenshot serving (R2)

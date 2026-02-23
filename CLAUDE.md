@@ -2,13 +2,13 @@
 
 ## Available Skills
 
-- **`/onboarding`** - Interactive guided deployment of your own Open-Inspect instance. Walks through
+- **`/onboarding`** - Interactive guided deployment of your own Wrench instance. Walks through
   repository setup, credential collection, Terraform deployment, and verification with user handoffs
   as needed.
 
 ## Deploying Your Own Instance
 
-For a complete guide to deploying your own instance of Open-Inspect, see
+For a complete guide to deploying your own instance of Wrench, see
 **[docs/GETTING_STARTED.md](docs/GETTING_STARTED.md)**.
 
 Alternatively, run `/onboarding` for an interactive guided setup.
@@ -48,8 +48,8 @@ https://{workspace}--{app}-{function_name}.modal.run
 
 For example (replace `<workspace>` with your Modal workspace name):
 
-- `api_create_sandbox` → `https://<workspace>--open-inspect-api-create-sandbox.modal.run`
-- `api_health` → `https://<workspace>--open-inspect-api-health.modal.run`
+- `api_create_sandbox` → `https://<workspace>--wrench-api-create-sandbox.modal.run`
+- `api_health` → `https://<workspace>--wrench-api-health.modal.run`
 
 Function names with underscores become hyphens in URLs.
 
@@ -239,7 +239,7 @@ re-run.
 
 ```bash
 # Create session (replace <your-subdomain> with your Cloudflare Workers subdomain)
-curl -X POST https://open-inspect-control-plane.<your-subdomain>.workers.dev/sessions \
+curl -X POST https://wrench-control-plane.<your-subdomain>.workers.dev/sessions \
   -H "Content-Type: application/json" \
   -d '{"repoOwner":"owner","repoName":"repo"}'
 
@@ -256,7 +256,7 @@ curl https://.../sessions/{sessionId}/events
 
 ```bash
 # Modal logs
-modal app logs open-inspect
+modal app logs wrench
 
 # Cloudflare logs (via dashboard)
 # Go to Workers & Pages → Your Worker → Logs

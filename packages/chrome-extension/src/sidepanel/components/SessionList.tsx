@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { listSessions } from "@/lib/api";
 import { Button } from "@/components/ui/button";
-import type { Session } from "@open-inspect/shared";
+import type { Session } from "@wrench/shared";
 
 interface SessionListProps {
   onSelectSession: (sessionId: string) => void;

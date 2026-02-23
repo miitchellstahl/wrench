@@ -1,5 +1,5 @@
 /**
- * Shared type definitions used across Open-Inspect packages.
+ * Shared type definitions used across Wrench packages.
  */
 
 // Session states

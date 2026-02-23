@@ -1,6 +1,6 @@
-# Getting Started with Open-Inspect
+# Getting Started with Wrench
 
-This guide walks you through deploying your own instance of Open-Inspect using Terraform.
+This guide walks you through deploying your own instance of Wrench using Terraform.
 
 > **Important**: This system is designed for **single-tenant deployment only**. All users share the
 > same GitHub App credentials and can access any repository the App is installed on. See the
@@ -10,7 +10,7 @@ This guide walks you through deploying your own instance of Open-Inspect using T
 
 ## Overview
 
-Open-Inspect uses Terraform to automate deployment across three cloud providers:
+Wrench uses Terraform to automate deployment across three cloud providers:
 
 | Provider       | Purpose                          | What Terraform Creates                               |
 | -------------- | -------------------------------- | ---------------------------------------------------- |
@@ -74,17 +74,17 @@ npm install -g wrangler
 
 ## Step 1: Fork the Repository
 
-Fork [ColeMurray/open-inspect](https://github.com/ColeMurray/open-inspect) to your GitHub account or
+Fork [ColeMurray/wrench](https://github.com/ColeMurray/wrench) to your GitHub account or
 organization.
 
 ```bash
 # Clone your fork
-git clone https://github.com/YOUR-USERNAME/open-inspect.git
-cd open-inspect
+git clone https://github.com/YOUR-USERNAME/wrench.git
+cd wrench
 npm install
 
 # Build the shared package (required before Terraform deployment)
-npm run build -w @open-inspect/shared
+npm run build -w @wrench/shared
 ```
 
 ---
@@ -114,7 +114,7 @@ Terraform needs a place to store its state. We use Cloudflare R2.
 wrangler login
 
 # Create the state bucket (requires R2 to be enabled — see note above)
-wrangler r2 bucket create open-inspect-terraform-state
+wrangler r2 bucket create wrench-terraform-state
 ```
 
 Create an R2 API Token:
@@ -158,16 +158,16 @@ access.
 1. Go to [GitHub Apps](https://github.com/settings/apps)
 2. Click **"New GitHub App"**
 3. Fill in the basics:
-   - **Name**: `Open-Inspect-YourName` (must be globally unique)
-   - **Homepage URL**: `https://open-inspect-{your-deployment-name}.vercel.app` (or your custom
+   - **Name**: `Wrench-YourName` (must be globally unique)
+   - **Homepage URL**: `https://wrench-{your-deployment-name}.vercel.app` (or your custom
      domain)
    - **Webhook**: Uncheck "Active" (not needed)
 4. Configure **Identifying and authorizing users** (OAuth):
    - **Callback URL**:
-     `https://open-inspect-{your-deployment-name}.vercel.app/api/auth/callback/github`
+     `https://wrench-{your-deployment-name}.vercel.app/api/auth/callback/github`
 
    > **Important**: The callback URL must match your deployed Vercel URL exactly. Terraform creates
-   > `https://open-inspect-{deployment_name}.vercel.app` where `{deployment_name}` is the unique
+   > `https://wrench-{deployment_name}.vercel.app` where `{deployment_name}` is the unique
    > value you set in `terraform.tfvars` (e.g., your GitHub username or company name).
 
 5. Set **Repository permissions**:
@@ -187,7 +187,7 @@ access.
     ```
 11. **Install the app** on your account/organization:
     - Click "Install App" in the sidebar
-    - Select the repositories you want Open-Inspect to access
+    - Select the repositories you want Wrench to access
 12. Note the **Installation ID** from the URL after installing:
     ```
     https://github.com/settings/installations/INSTALLATION_ID
@@ -211,7 +211,7 @@ Skip this step if you don't need Slack integration.
 
 1. Go to [Slack API Apps](https://api.slack.com/apps)
 2. Click **"Create New App"** → **"From scratch"**
-3. Name it (e.g., `Open-Inspect`) and select your workspace
+3. Name it (e.g., `Wrench`) and select your workspace
 
 ### Configure OAuth & Permissions
 
@@ -374,7 +374,7 @@ enable_service_bindings        = false
 
 ```bash
 # From the repository root
-npm run build -w @open-inspect/control-plane -w @open-inspect/slack-bot
+npm run build -w @wrench/control-plane -w @wrench/slack-bot
 ```
 
 Then run:
@@ -426,7 +426,7 @@ The App Home provides a settings interface where users can configure their prefe
 2. Toggle **"Enable Events"** to On
 3. Enter **Request URL**:
    ```
-   https://open-inspect-slack-bot-{deployment_name}.YOUR-SUBDOMAIN.workers.dev/events
+   https://wrench-slack-bot-{deployment_name}.YOUR-SUBDOMAIN.workers.dev/events
    ```
    (Replace `YOUR-SUBDOMAIN` with your Cloudflare Workers subdomain and `{deployment_name}` with
    your deployment name from terraform.tfvars)
@@ -443,7 +443,7 @@ The App Home provides a settings interface where users can configure their prefe
 2. Toggle **"Interactivity"** to On
 3. Enter **Request URL**:
    ```
-   https://open-inspect-slack-bot-{deployment_name}.YOUR-SUBDOMAIN.workers.dev/interactions
+   https://wrench-slack-bot-{deployment_name}.YOUR-SUBDOMAIN.workers.dev/interactions
    ```
 4. Click **Save Changes**
 
@@ -467,20 +467,20 @@ the code. You have two options:
 
 ```bash
 # From the repository root (replace {deployment_name} with your value from terraform.tfvars)
-npx vercel link --project open-inspect-{deployment_name}
+npx vercel link --project wrench-{deployment_name}
 npx vercel --prod
 ```
 
 > **Note**: The Vercel project is configured with custom build commands for the monorepo structure.
 > Terraform sets these automatically:
 >
-> - Install: `cd ../.. && npm install && npm run build -w @open-inspect/shared`
+> - Install: `cd ../.. && npm install && npm run build -w @wrench/shared`
 > - Build: `next build`
 
 ### Option B: Link Git Repository (For Automatic Deployments)
 
 1. Go to [Vercel Dashboard](https://vercel.com/dashboard)
-2. Find the `open-inspect-{deployment_name}` project
+2. Find the `wrench-{deployment_name}` project
 3. Go to **Settings → Git**
 4. Click **"Connect Git Repository"** and select your fork
 5. Vercel will automatically deploy on push to main
@@ -503,13 +503,13 @@ Or manually:
 
 ```bash
 # 1. Control Plane health check (replace {deployment_name} and YOUR-SUBDOMAIN)
-curl https://open-inspect-control-plane-{deployment_name}.YOUR-SUBDOMAIN.workers.dev/health
+curl https://wrench-control-plane-{deployment_name}.YOUR-SUBDOMAIN.workers.dev/health
 
 # 2. Modal health check (replace YOUR-WORKSPACE)
-curl https://YOUR-WORKSPACE--open-inspect-api-health.modal.run
+curl https://YOUR-WORKSPACE--wrench-api-health.modal.run
 
 # 3. Web app (replace {deployment_name}, should return 200)
-curl -I https://open-inspect-{deployment_name}.vercel.app
+curl -I https://wrench-{deployment_name}.vercel.app
 ```
 
 ### Test the Full Flow
@@ -537,7 +537,7 @@ Go to your fork's Settings → Secrets and variables → Actions, and add:
 | `VERCEL_API_TOKEN`            | Vercel API token                                                             |
 | `VERCEL_TEAM_ID`              | Vercel team/account ID                                                       |
 | `VERCEL_PROJECT_ID`           | Vercel project ID (from project settings)                                    |
-| `NEXTAUTH_URL`                | Your web app URL (e.g., `https://open-inspect-{deployment_name}.vercel.app`) |
+| `NEXTAUTH_URL`                | Your web app URL (e.g., `https://wrench-{deployment_name}.vercel.app`) |
 | `MODAL_TOKEN_ID`              | Modal token ID                                                               |
 | `MODAL_TOKEN_SECRET`          | Modal token secret                                                           |
 | `MODAL_WORKSPACE`             | Modal workspace name                                                         |
@@ -573,7 +573,7 @@ To update after pulling changes from upstream:
 git pull upstream main
 
 # Rebuild shared package if it changed
-npm run build -w @open-inspect/shared
+npm run build -w @wrench/shared
 
 # Re-run Terraform (it only changes what's needed)
 cd terraform/environments/production
@@ -602,7 +602,7 @@ terraform init -backend-config=backend.tfvars
 ### GitHub OAuth "redirect_uri is not associated with this application"
 
 The callback URL in your GitHub App settings doesn't match your deployed URL. Update the callback
-URL to match `https://open-inspect-{deployment_name}.vercel.app/api/auth/callback/github`.
+URL to match `https://wrench-{deployment_name}.vercel.app/api/auth/callback/github`.
 
 ### Modal deployment fails
 
@@ -611,7 +611,7 @@ URL to match `https://open-inspect-{deployment_name}.vercel.app/api/auth/callbac
 modal token show
 
 # View Modal logs
-modal app logs open-inspect
+modal app logs wrench
 ```
 
 ### Worker deployment fails / "no such file or directory" for dist/index.js
@@ -620,10 +620,10 @@ Terraform references the built worker bundles. Build them before running `terraf
 
 ```bash
 # Build shared package first
-npm run build -w @open-inspect/shared
+npm run build -w @wrench/shared
 
 # Build workers (required before Terraform)
-npm run build -w @open-inspect/control-plane -w @open-inspect/slack-bot
+npm run build -w @wrench/control-plane -w @wrench/slack-bot
 
 # Verify bundles exist
 ls packages/control-plane/dist/index.js

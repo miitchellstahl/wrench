@@ -6,7 +6,7 @@ Accepted
 
 ## Context
 
-Open-Inspect currently runs with GitHub as the only production SCM integration, while external
+Wrench currently runs with GitHub as the only production SCM integration, while external
 contributors have requested Bitbucket support. The codebase already has a `SourceControlProvider`
 abstraction, but GitHub-specific details can still leak into non-provider layers if not guarded.
 

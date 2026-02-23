@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Deployment entry point for Open-Inspect Modal app.
+Deployment entry point for Wrench Modal app.
 
 This file imports all modules to register their functions with the app.
 Run with: modal deploy deploy.py

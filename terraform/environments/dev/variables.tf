@@ -141,7 +141,7 @@ variable "nextauth_secret" {
 # =============================================================================
 
 variable "deployment_name" {
-  description = "Unique deployment name used in URLs and resource names. Use something unique like your GitHub username or company name (e.g., 'acme', 'johndoe'). This will create URLs like: open-inspect-{deployment_name}.vercel.app"
+  description = "Unique deployment name used in URLs and resource names. Use something unique like your GitHub username or company name (e.g., 'acme', 'johndoe'). This will create URLs like: wrench-{deployment_name}.vercel.app"
   type        = string
 }
 
@@ -166,7 +166,7 @@ variable "project_root" {
 variable "modal_app_name" {
   description = "Modal app name (use a different name per environment to isolate sandboxes)"
   type        = string
-  default     = "open-inspect-dev"
+  default     = "wrench-dev"
 }
 
 # =============================================================================

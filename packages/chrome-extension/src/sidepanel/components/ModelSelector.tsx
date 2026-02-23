@@ -5,7 +5,7 @@ import {
   DEFAULT_MODEL,
   type ValidModel,
   type ReasoningEffort,
-} from "@open-inspect/shared";
+} from "@wrench/shared";
 import { Button } from "@/components/ui/button";
 
 interface ModelSelectorProps {

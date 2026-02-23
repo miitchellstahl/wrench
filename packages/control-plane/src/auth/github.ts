@@ -97,7 +97,7 @@ export async function getGitHubUser(accessToken: string): Promise<GitHubUser> {
     headers: {
       Authorization: `Bearer ${accessToken}`,
       Accept: "application/vnd.github.v3+json",
-      "User-Agent": "Open-Inspect",
+      "User-Agent": "Wrench",
     },
   });
 
@@ -118,7 +118,7 @@ export async function getGitHubUserEmails(
     headers: {
       Authorization: `Bearer ${accessToken}`,
       Accept: "application/vnd.github.v3+json",
-      "User-Agent": "Open-Inspect",
+      "User-Agent": "Wrench",
     },
   });
 

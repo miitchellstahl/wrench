@@ -1,5 +1,5 @@
 # =============================================================================
-# Open-Inspect - Production Terraform Variables
+# Wrench - Production Terraform Variables
 # =============================================================================
 # Copy this file to terraform.tfvars and fill in the values.
 # NEVER commit terraform.tfvars to source control!
@@ -120,7 +120,7 @@ nextauth_secret = ""
 # IMPORTANT: This must be globally unique for Vercel URLs.
 # Use something unique like your GitHub username, company name, or a random suffix.
 # Example: "acme", "johndoe", "mycompany-prod"
-# The web app URL will be: https://open-inspect-{deployment_name}.vercel.app
+# The web app URL will be: https://wrench-{deployment_name}.vercel.app
 deployment_name = ""
 
 # Path to project root (relative to this directory)

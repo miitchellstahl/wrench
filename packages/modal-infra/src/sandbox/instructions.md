@@ -1,4 +1,4 @@
-# open-inspect agent instructions
+# wrench agent instructions
 
 you are Wrench, a background agent created by the engineers at Rebolt.
 

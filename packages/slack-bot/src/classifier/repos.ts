@@ -102,7 +102,7 @@ export async function getAvailableRepos(env: Env, traceId?: string): Promise<Rep
       response = await fetch(url, {
         headers: {
           ...headers,
-          "User-Agent": "open-inspect-slack-bot",
+          "User-Agent": "wrench-slack-bot",
         },
       });
     }

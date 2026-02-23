@@ -6,7 +6,7 @@ import { useState, useEffect, useRef, useCallback } from "react";
 import Link from "next/link";
 import { SidebarLayout, useSidebarContext } from "@/components/sidebar-layout";
 import { formatModelNameLower } from "@/lib/format";
-import { MODEL_OPTIONS, DEFAULT_MODEL, getDefaultReasoningEffort } from "@open-inspect/shared";
+import { MODEL_OPTIONS, DEFAULT_MODEL, getDefaultReasoningEffort } from "@wrench/shared";
 import { ReasoningEffortPills } from "@/components/reasoning-effort-pills";
 import { Button } from "@/components/ui/button";
 

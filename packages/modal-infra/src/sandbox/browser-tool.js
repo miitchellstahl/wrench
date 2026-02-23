@@ -1,5 +1,5 @@
 /**
- * Browser Interaction Tool for Open-Inspect.
+ * Browser Interaction Tool for Wrench.
  *
  * Provides the agent with browser automation capabilities via Playwright.
  * The agent can navigate pages, click elements, fill forms, and extract content

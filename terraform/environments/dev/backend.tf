@@ -6,7 +6,7 @@
 
 terraform {
   backend "s3" {
-    bucket = "open-inspect-terraform-state"
+    bucket = "wrench-terraform-state"
     key    = "dev/terraform.tfstate"
     region = "auto"
 

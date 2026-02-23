@@ -1,5 +1,5 @@
 /**
- * Type definitions for Open-Inspect Control Plane.
+ * Type definitions for Wrench Control Plane.
  */
 
 // Environment bindings

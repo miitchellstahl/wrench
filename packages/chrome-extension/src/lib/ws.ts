@@ -1,7 +1,7 @@
 import { getWsUrl } from "@/lib/storage";
 import { fetchWsToken } from "@/lib/api";
 import { WS_CLOSE_AUTH_REQUIRED, WS_CLOSE_SESSION_EXPIRED } from "@/lib/constants";
-import type { ServerMessage } from "@open-inspect/shared";
+import type { ServerMessage } from "@wrench/shared";
 
 // re-export for convenience
 export type { ServerMessage };

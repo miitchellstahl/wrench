@@ -1,5 +1,5 @@
 {
-  "name": "open-inspect",
+  "name": "wrench",
   "version": "0.1.0",
   "private": true,
   "type": "module",
@@ -14,7 +14,7 @@
     "typecheck": "npm run typecheck --workspaces --if-present",
     "build": "npm run build --workspaces --if-present",
     "prepare": "node -e \"if (process.env.CI) process.exit(0)\" && husky",
-    "deploy:shared": "npm run build -w @open-inspect/shared",
+    "deploy:shared": "npm run build -w @wrench/shared",
     "deploy:dev": "npm run deploy:shared && cd terraform/environments/dev && terraform apply -auto-approve",
     "deploy:prod": "npm run deploy:shared && cd terraform/environments/production && terraform apply -auto-approve",
     "deploy:dev:plan": "npm run deploy:shared && cd terraform/environments/dev && terraform plan",

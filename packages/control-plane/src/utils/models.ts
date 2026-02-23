@@ -1,7 +1,7 @@
 /**
  * Model validation and extraction utilities.
  *
- * Re-exports from @open-inspect/shared for backward compatibility.
+ * Re-exports from @wrench/shared for backward compatibility.
  */
 
 export {
@@ -19,4 +19,4 @@ export {
   getReasoningConfig,
   getDefaultReasoningEffort,
   isValidReasoningEffort,
-} from "@open-inspect/shared";
+} from "@wrench/shared";

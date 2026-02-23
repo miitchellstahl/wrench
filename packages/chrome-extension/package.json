@@ -1,5 +1,5 @@
 {
-  "name": "@open-inspect/chrome-extension",
+  "name": "@wrench/chrome-extension",
   "version": "0.1.0",
   "private": true,
   "type": "module",
@@ -9,7 +9,7 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@open-inspect/shared": "file:../shared",
+    "@wrench/shared": "file:../shared",
     "@radix-ui/react-slot": "^1.2.4",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",

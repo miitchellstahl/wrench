@@ -15,7 +15,7 @@ import {
   DEFAULT_MODEL,
   getDefaultReasoningEffort,
   type ModelDisplayInfo,
-} from "@open-inspect/shared";
+} from "@wrench/shared";
 import { ReasoningEffortPills } from "@/components/reasoning-effort-pills";
 import { Button } from "@/components/ui/button";
 import type { SandboxEvent } from "@/lib/tool-formatters";

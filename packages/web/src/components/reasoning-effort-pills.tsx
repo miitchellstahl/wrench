@@ -3,7 +3,7 @@ import {
   MODEL_REASONING_CONFIG,
   type ValidModel,
   type ReasoningEffort,
-} from "@open-inspect/shared";
+} from "@wrench/shared";
 
 interface ReasoningEffortPillsProps {
   selectedModel: string;

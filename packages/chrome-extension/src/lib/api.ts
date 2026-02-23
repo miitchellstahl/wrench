@@ -4,7 +4,7 @@ import type {
   ListSessionsResponse,
   CreateSessionResponse,
   InstallationRepository,
-} from "@open-inspect/shared";
+} from "@wrench/shared";
 
 /**
  * fetch wrapper that makes credentialed requests to the wrench web app.

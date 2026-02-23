@@ -1,5 +1,5 @@
 {
-  "name": "@open-inspect/web",
+  "name": "@wrench/web",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -13,7 +13,7 @@
     "test:watch": "vitest"
   },
   "dependencies": {
-    "@open-inspect/shared": "file:../shared",
+    "@wrench/shared": "file:../shared",
     "@radix-ui/react-slot": "^1.2.4",
     "@tailwindcss/typography": "^0.5.19",
     "class-variance-authority": "^0.7.1",

@@ -1,5 +1,5 @@
 # =============================================================================
-# Open-Inspect - Dev Environment
+# Wrench - Dev Environment
 # =============================================================================
 # Parallel deployment with separate resources for safe iteration.
 # Uses deployment_name = "foundry-dev" to isolate from production.
@@ -9,7 +9,7 @@ locals {
   name_suffix = var.deployment_name
 
   # URLs for cross-service configuration
-  control_plane_host = "open-inspect-control-plane-${local.name_suffix}.${var.cloudflare_worker_subdomain}.workers.dev"
+  control_plane_host = "wrench-control-plane-${local.name_suffix}.${var.cloudflare_worker_subdomain}.workers.dev"
   control_plane_url  = "https://${local.control_plane_host}"
   ws_url             = "wss://${local.control_plane_host}"
 
@@ -26,14 +26,14 @@ module "session_index_kv" {
   source = "../../modules/cloudflare-kv"
 
   account_id     = var.cloudflare_account_id
-  namespace_name = "open-inspect-session-index-${local.name_suffix}"
+  namespace_name = "wrench-session-index-${local.name_suffix}"
 }
 
 module "slack_kv" {
   source = "../../modules/cloudflare-kv"
 
   account_id     = var.cloudflare_account_id
-  namespace_name = "open-inspect-slack-kv-${local.name_suffix}"
+  namespace_name = "wrench-slack-kv-${local.name_suffix}"
 }
 
 # =============================================================================
@@ -42,7 +42,7 @@ module "slack_kv" {
 
 resource "cloudflare_d1_database" "main" {
   account_id = var.cloudflare_account_id
-  name       = "open-inspect-${local.name_suffix}"
+  name       = "wrench-${local.name_suffix}"
 
   read_replication = {
     mode = "disabled"
@@ -76,7 +76,7 @@ resource "null_resource" "d1_migrations" {
 
 resource "cloudflare_r2_bucket" "screenshots" {
   account_id = var.cloudflare_account_id
-  name       = "open-inspect-screenshots-${local.name_suffix}"
+  name       = "wrench-screenshots-${local.name_suffix}"
   location   = "ENAM"
 }
 
@@ -102,7 +102,7 @@ module "control_plane_worker" {
   source = "../../modules/cloudflare-worker"
 
   account_id  = var.cloudflare_account_id
-  worker_name = "open-inspect-control-plane-${local.name_suffix}"
+  worker_name = "wrench-control-plane-${local.name_suffix}"
   script_path = local.control_plane_script_path
 
   kv_namespaces = [
@@ -129,7 +129,7 @@ module "control_plane_worker" {
   service_bindings = [
     {
       binding_name = "SLACK_BOT"
-      service_name = "open-inspect-slack-bot-${local.name_suffix}"
+      service_name = "wrench-slack-bot-${local.name_suffix}"
     }
   ]
 
@@ -190,7 +190,7 @@ module "slack_bot_worker" {
   source = "../../modules/cloudflare-worker"
 
   account_id  = var.cloudflare_account_id
-  worker_name = "open-inspect-slack-bot-${local.name_suffix}"
+  worker_name = "wrench-slack-bot-${local.name_suffix}"
   script_path = local.slack_bot_script_path
 
   kv_namespaces = [
@@ -203,7 +203,7 @@ module "slack_bot_worker" {
   service_bindings = [
     {
       binding_name = "CONTROL_PLANE"
-      service_name = "open-inspect-control-plane-${local.name_suffix}"
+      service_name = "wrench-control-plane-${local.name_suffix}"
     }
   ]
 
@@ -262,7 +262,7 @@ module "modal_app" {
   deploy_module = "deploy"
   source_hash   = data.external.modal_source_hash.result.hash
 
-  volume_name = "open-inspect-data"
+  volume_name = "wrench-data"
 
   secrets = [
     {

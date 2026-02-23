@@ -1,1 +1,1 @@
-"""Tests for Open-Inspect Modal infrastructure."""
+"""Tests for Wrench Modal infrastructure."""

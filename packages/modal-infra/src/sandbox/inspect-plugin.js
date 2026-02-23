@@ -1,5 +1,5 @@
 /**
- * Create Pull Request Tool for Open-Inspect.
+ * Create Pull Request Tool for Wrench.
  *
  * This tool creates a pull request for committed changes.
  * Uses tool() helper from @opencode-ai/plugin with tool.schema for Zod compatibility.

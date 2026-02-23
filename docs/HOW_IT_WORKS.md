@@ -1,7 +1,7 @@
-# How Open-Inspect Works
+# How Wrench Works
 
-Open-Inspect is a background coding agent system. Unlike interactive coding assistants where you
-watch the AI work in real-time, Open-Inspect runs sessions in the cloud independently of your
+Wrench is a background coding agent system. Unlike interactive coding assistants where you
+watch the AI work in real-time, Wrench runs sessions in the cloud independently of your
 connection. You send a prompt, optionally close your laptop, and check the results later.
 
 This guide covers the core architecture, how sessions work, and what happens when you send a prompt.
@@ -11,7 +11,7 @@ For deployment instructions, see [GETTING_STARTED.md](./GETTING_STARTED.md).
 
 ## The Background Model
 
-The key insight behind Open-Inspect is that coding sessions don't need your constant attention.
+The key insight behind Wrench is that coding sessions don't need your constant attention.
 
 **Traditional coding assistants** require you to stay connected:
 
@@ -19,7 +19,7 @@ The key insight behind Open-Inspect is that coding sessions don't need your cons
 You type → AI responds → You watch → You respond → Repeat
 ```
 
-**Open-Inspect** decouples your presence from the work:
+**Wrench** decouples your presence from the work:
 
 ```
 You send prompt → Session runs in background → You check results when ready
@@ -36,7 +36,7 @@ This enables workflows that aren't possible with interactive tools:
 
 ## Sessions
 
-A **session** is the core unit of work in Open-Inspect. Each session is:
+A **session** is the core unit of work in Wrench. Each session is:
 
 - **Tied to a repository**: The agent works in a clone of your repo
 - **Persistent**: State survives across connections—close the browser, come back later
@@ -72,7 +72,7 @@ high performance even with hundreds of concurrent sessions.
 
 ## Architecture
 
-Open-Inspect uses a three-tier architecture spanning multiple cloud providers:
+Wrench uses a three-tier architecture spanning multiple cloud providers:
 
 ```
 ┌─────────────────────────────────────────────────────────────────────────┐
@@ -165,7 +165,7 @@ works because state lives in the control plane, not the client.
 
 ## The Sandbox Lifecycle
 
-Understanding the sandbox lifecycle explains why Open-Inspect can be fast despite running in the
+Understanding the sandbox lifecycle explains why Wrench can be fast despite running in the
 cloud.
 
 ### Fresh Start (No Snapshot)
@@ -179,13 +179,13 @@ When you create a session for a repo without an existing snapshot:
 └─────────┘    └──────────┘    └─────────────┘    └─────────────┘    └───────┘
                                      │
                                      ▼
-                            .openinspect/setup.sh
+                            .wrench/setup.sh
                             (if present in repo)
 ```
 
 1. **Sandbox created**: Modal spins up a new container from the base image
 2. **Git sync**: Clones your repository using GitHub App credentials
-3. **Setup script**: Runs `.openinspect/setup.sh` if present (for `npm install`, etc.)
+3. **Setup script**: Runs `.wrench/setup.sh` if present (for `npm install`, etc.)
 4. **Agent start**: OpenCode server starts and connects back to the control plane
 5. **Ready**: Sandbox accepts prompts
 
@@ -278,7 +278,7 @@ You can also stop the current execution if the agent is going down the wrong pat
 
 ## The Agent
 
-Open-Inspect uses [OpenCode](https://opencode.ai) as its coding agent. OpenCode is an open-source
+Wrench uses [OpenCode](https://opencode.ai) as its coding agent. OpenCode is an open-source
 agent designed to run as a server, making it ideal for background execution.
 
 ### What the Agent Can Do
@@ -298,7 +298,7 @@ When the agent makes commits, they're attributed to the user who sent the prompt
 
 ```
 Author: Jane Developer <jane@example.com>
-Committer: Open-Inspect <bot@open-inspect.dev>
+Committer: Wrench <bot@wrench.dev>
 ```
 
 This ensures your contributions are properly credited in git history.
@@ -387,7 +387,7 @@ This means even "cold" sessions (no previous snapshot) start from a recent basel
 
 ## Security Model
 
-Open-Inspect is designed for **single-tenant deployment** where all users are trusted members of the
+Wrench is designed for **single-tenant deployment** where all users are trusted members of the
 same organization.
 
 ### Why Single-Tenant?

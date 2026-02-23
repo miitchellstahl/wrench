@@ -1,5 +1,5 @@
 /**
- * Fetch Cloudflare Worker logs for debugging the Open-Inspect control plane.
+ * Fetch Cloudflare Worker logs for debugging the Wrench control plane.
  *
  * Uses the Workers Observability Telemetry Query API to search historical logs
  * by session ID, Cloudflare request ID, trace ID, or free-text search.
@@ -175,7 +175,7 @@ if (showHelp || (!sessionId && !requestId && !traceId && !searchText && !scriptN
   console.error(`  bun ${prog} --session abc123 --level error`);
   console.error(`  bun ${prog} --request-id 9b9b9937bc6dc65e --json | pbcopy`);
   console.error(`  bun ${prog} --search "sandbox.create" --mins 30`);
-  console.error(`  bun ${prog} --session abc123 --script open-inspect-control-plane`);
+  console.error(`  bun ${prog} --session abc123 --script wrench-control-plane`);
   process.exit(showHelp ? 0 : 1);
 }
 

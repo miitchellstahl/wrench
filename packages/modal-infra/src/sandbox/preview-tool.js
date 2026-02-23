@@ -1,5 +1,5 @@
 /**
- * Preview Tool for Open-Inspect.
+ * Preview Tool for Wrench.
  *
  * Exposes a local dev server to the internet via Cloudflare Tunnel (cloudflared).
  * Reports the preview URL as an artifact so it's visible in the session UI

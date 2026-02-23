@@ -1,5 +1,5 @@
 """
-Base image definition for Open-Inspect sandboxes.
+Base image definition for Wrench sandboxes.
 
 This image provides a complete development environment with:
 - Debian slim base with git, curl, build-essential

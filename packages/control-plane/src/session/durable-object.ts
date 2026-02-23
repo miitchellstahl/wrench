@@ -304,7 +304,7 @@ export class SessionDO extends DurableObject<Env> {
     // Build configuration
     const controlPlaneUrl =
       this.env.WORKER_URL ||
-      `https://open-inspect-control-plane.${this.env.CF_ACCOUNT_ID || "workers"}.workers.dev`;
+      `https://wrench-control-plane.${this.env.CF_ACCOUNT_ID || "workers"}.workers.dev`;
 
     // Resolve sessionId for lifecycle manager logging context
     const session = this.repository.getSession();
